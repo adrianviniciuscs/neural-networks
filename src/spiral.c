@@ -1,7 +1,19 @@
 #include "../include/dataset.h"
+#include "../include/nn.h"
+#include <time.h>
+#include <stdlib.h>
+#include <math.h>
 
-// Code for generating a spiral dataset 
 void spiral_data(int points, int classes, spiral_data_t *data) {
+    int total_points = points * classes;
+    data->x = (double *)malloc(total_points * 2 * sizeof(double)); // Allocate memory for x
+    data->y = (double *)malloc(total_points * sizeof(double)); // Allocate memory for y
+
+    if (data->x == NULL || data->y == NULL) {
+        printf("Memory allocation failed.\n");
+        return;
+    }
+
     int ix = 0; // Index for x coordinates
     int iy = 0; // Index for y coordinates
 
@@ -35,7 +47,6 @@ void spiral_data(int points, int classes, spiral_data_t *data) {
         }
     }
 }
-
 void dealloc_spiral(spiral_data_t *data)
 {
     if (data->x != NULL) {

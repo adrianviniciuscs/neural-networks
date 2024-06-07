@@ -4,7 +4,7 @@
 
 #define RAND_HIGH_RANGE (0.10)
 #define RAND_MIN_RANGE (-0.10)
-#define INIT_BIASES (0.0)
+#define INIT_ (0.0)
 
 #define NET_BATCH_SIZE 3
 #define NET_INPUT_LAYER_1_SIZE 4 
