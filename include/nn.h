@@ -129,22 +129,5 @@ void activation_ReLU_callback(double *output);
  * @return Random number within the specified range.
  */
 double uniform_distribution(double rangeLow, double rangeHigh);
-
-/** 
- * @brief Generate spiral data for classification.
- *
- * @param points Number of points to generate per class.
- * @param classes Number of classes to generate.
- * @param data Pointer to the spiral data structure to hold the generated data.
- */
-void spiral_data(int points, int classes, spiral_data_t *data);
-
-/** 
- * @brief Free the memory allocated for spiral data.
- *
- * @param data Pointer to the spiral data structure.
- */
-void dealloc_spiral(spiral_data_t *data);
-
 #endif /* NN_H */
 
