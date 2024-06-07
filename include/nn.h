@@ -24,21 +24,12 @@ typedef void (*activation_callback)(double *output);
  */
 typedef struct {
     double *weights;             /**< Pointer to the weights array */
-    double *biase;               /**< Pointer to the biases array */
+    double *biases;               /**< Pointer to the biases array */
     double *output;              /**< Pointer to the output array */
     int input_size;              /**< Size of the input layer */
     int output_size;             /**< Size of the output layer */
     activation_callback callback;/**< Pointer to the activation callback function */
 } layer_dense_t;
-
-
-/**
- * @brief Structure representing spiral data for classification.
- */
-typedef struct{
-    double *x; /* Holds the x y axis data. Data is formated x y x y x y*/
-    double *y; /* Holds the group the data belongs too. Two steps of x is a single step of y*/
-}spiral_data_t;
 
 /** 
  * @brief Generate a random floating point number within a specified range.
@@ -120,6 +111,25 @@ double activation_ReLU(double x);
  * @param output Pointer to the output value.
  */
 void activation_ReLU_callback(double *output);
+
+/**
+ * @brief Apply softmax activation function to the output layer.
+ *
+ * Softmax function normalizes the output of a layer into a probability distribution
+ * over the classes.
+ *
+ * @param output_layer Pointer to the dense layer structure containing the output to be normalized.
+ */
+void activation_softmax(layer_dense_t *output_layer);
+
+/**
+ * @brief Calculate the sum of the output values of a dense layer.
+ *
+ * @param output_layer Pointer to the dense layer structure containing the output values.
+ * @return Sum of the output values.
+ */
+double sum_softmax_layer_output(layer_dense_t *output_layer);
+
 
 /** 
  * @brief Generate a random number within a uniform distribution range.

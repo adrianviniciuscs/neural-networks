@@ -1,39 +1,23 @@
-CC=gcc
-CFLAGS=-Wall -Iinclude
-LDFLAGS=-lm
+CC = gcc
+CFLAGS = -Wall -Iinclude
+SRCDIR = src
+BINDIR = bin
 
-# Directories
-SRCDIR=src
-OBJDIR=obj
-BINDIR=bin
-INCDIR=include
-EXDIR=examples
+# List of examples
+EXAMPLES = $(wildcard examples/*.c)
+BINS = $(patsubst examples/%.c, $(BINDIR)/%, $(EXAMPLES))
 
-# Files
-SRC=$(wildcard $(SRCDIR)/*.c)
-OBJ=$(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-EXEC=$(BINDIR)/3-batches-layers
-EXECS=$(BINDIR)/3-batches-layers $(BINDIR)/4-relu
+# Default target
+all: $(BINS)
 
-# Targets
-all: $(EXEC) $(EXECS)
+# Rule for compiling each example
+$(BINDIR)/%: examples/%.c $(SRCDIR)/nn.c $(SRCDIR)/spiral.c
+	@mkdir -p $(BINDIR)
+	$(CC) $(CFLAGS) $^ -o $@ -lm
 
-$(EXEC): $(OBJ)
-	mkdir -p $(BINDIR)
-	$(CC) $(CFLAGS) $(OBJDIR)/3-batches-layers.o $(OBJ) -o $@ $(LDFLAGS)
-
-$(BINDIR)/4-relu: $(OBJDIR)/4-relu.o $(OBJ)
-	mkdir -p $(BINDIR)
-	$(CC) $(CFLAGS) $< $(OBJ) -o $@ $(LDFLAGS)
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJDIR)/%.o: $(EXDIR)/%.c
-	mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
+# Clean target
 clean:
-	rm -rf $(OBJDIR) $(BINDIR)
+	rm -rf $(BINDIR)
+
+.PHONY: all clean
 

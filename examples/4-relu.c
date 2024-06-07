@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/nn.h"
+#include "../include/dataset.h"
 
 #define NET_BATCH_SIZE 300
 #define NET_INPUT_LAYER_1_SIZE 2
