@@ -17,3 +17,4 @@ void layer_output(double *input,double *weights,double *bias,int input_size,doub
         offset+=input_size;
     }
 }
+
