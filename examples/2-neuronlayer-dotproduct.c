@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../include/utils.h"
+#include "../include/nn.h"
 
 // Define sizes for input and output layers
 #define NET_INPUT_LAYER_SIZE 4 
@@ -24,7 +24,7 @@ int main(void)
     double output[NET_OUTPUT_LAYER_SIZE] = {0.0};
 
     // Calculate the output of the neural network layer
-    layer_output(&input[0], &weights[0][0], &bias[0], NET_INPUT_LAYER_SIZE, &output[0], NET_OUTPUT_LAYER_SIZE);
+    layer_output(&input[0], &weights[0][0], &bias[0], NET_INPUT_LAYER_SIZE, &output[0], NET_OUTPUT_LAYER_SIZE, 0);
 
     // Print the output values
     printf("Network output: %f %f %f\n", output[0], output[1], output[2]);

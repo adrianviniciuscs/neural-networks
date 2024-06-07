@@ -1,24 +1,44 @@
+/**
+ * @file nn.h
+ * @brief Header file for neural network functions and data structures.
+ */
+
 #ifndef NN_H
 #define NN_H
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "utils.h"
+#include <math.h>
 
-#define RAND_HIGH_RANGE (0.10)
-#define RAND_MIN_RANGE (-0.10)
-#define INIT_BIASES (0.0)
+#define RAND_HIGH_RANGE (0.10)  /**< Upper limit for random weight initialization */
+#define RAND_MIN_RANGE (-0.10)  /**< Lower limit for random weight initialization */
+#define INIT_BIASES (0.0)       /**< Initial value for biases */
+
+/**
+ * @brief Activation function callback type definition.
+ */
+typedef void (*activation_callback)(double *output);
 
 /**
  * @brief Structure representing a dense layer in a neural network.
  */
 typedef struct {
-    double *weights;    /**< Pointer to the weights array */
-    double *biase;      /**< Pointer to the biases array */
-    double *output;     /**< Pointer to the output array */
-    int input_size;     /**< Size of the input layer */
-    int output_size;    /**< Size of the output layer */
+    double *weights;             /**< Pointer to the weights array */
+    double *biase;               /**< Pointer to the biases array */
+    double *output;              /**< Pointer to the output array */
+    int input_size;              /**< Size of the input layer */
+    int output_size;             /**< Size of the output layer */
+    activation_callback callback;/**< Pointer to the activation callback function */
 } layer_dense_t;
+
+
+/**
+ * @brief Structure representing spiral data for classification.
+ */
+typedef struct{
+    double *x; /* Holds the x y axis data. Data is formated x y x y x y*/
+    double *y; /* Holds the group the data belongs too. Two steps of x is a single step of y*/
+}spiral_data_t;
 
 /** 
  * @brief Generate a random floating point number within a specified range.
@@ -53,6 +73,78 @@ void dealloc_layer(layer_dense_t *layer);
  */
 void forward(layer_dense_t *previous_layer, layer_dense_t *next_layer);
 
-#endif /* NN_H */
+/** 
+ * @brief Calculate the dot product of a neuron and add the bias, optionally applying an activation callback.
+ *
+ * @param input Pointer to the input data.
+ * @param weights Pointer to the weights of the neuron.
+ * @param bias Pointer to the bias of the neuron.
+ * @param input_size Number of neurons in the input layer.
+ * @param callback Pointer to the activation callback function.
+ * @return Output of the neuron after activation.
+ */
+double dot_product(double *input, double *weights, double *bias, int input_size, activation_callback callback);
 
+/** 
+ * @brief Calculate the dot products of each neuron in a layer and add the bias, storing them in an output array.
+ *
+ * @param input Pointer to the input data.
+ * @param weights Pointer to the weights of the neurons.
+ * @param bias Pointer to the biases of the neurons.
+ * @param input_size Number of neurons in the input layer.
+ * @param outputs Pointer to the output array.
+ * @param output_size Number of neurons in the output layer.
+ * @param callback Pointer to the activation callback function.
+ */
+void layer_output(double *input, double *weights, double *bias, int input_size, double *outputs, int output_size, activation_callback callback);
+
+/** 
+ * @brief Sigmoid activation function.
+ *
+ * @param x Input value.
+ * @return Output of the sigmoid function.
+ */
+double activation_sigmoid(double x);
+
+/** 
+ * @brief ReLU activation function.
+ *
+ * @param x Input value.
+ * @return Output of the ReLU function.
+ */
+double activation_ReLU(double x);
+
+/** 
+ * @brief Apply ReLU activation function to the output of a node.
+ *
+ * @param output Pointer to the output value.
+ */
+void activation_ReLU_callback(double *output);
+
+/** 
+ * @brief Generate a random number within a uniform distribution range.
+ *
+ * @param rangeLow Lower bound of the range.
+ * @param rangeHigh Upper bound of the range.
+ * @return Random number within the specified range.
+ */
+double uniform_distribution(double rangeLow, double rangeHigh);
+
+/** 
+ * @brief Generate spiral data for classification.
+ *
+ * @param points Number of points to generate per class.
+ * @param classes Number of classes to generate.
+ * @param data Pointer to the spiral data structure to hold the generated data.
+ */
+void spiral_data(int points, int classes, spiral_data_t *data);
+
+/** 
+ * @brief Free the memory allocated for spiral data.
+ *
+ * @param data Pointer to the spiral data structure.
+ */
+void dealloc_spiral(spiral_data_t *data);
+
+#endif /* NN_H */
 
