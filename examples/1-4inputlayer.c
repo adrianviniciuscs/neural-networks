@@ -1,3 +1,4 @@
+#include "../include/nn.h"
 #include <stdio.h>
 
 int main() {
