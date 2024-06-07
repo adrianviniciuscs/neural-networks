@@ -31,4 +31,17 @@ double dot_product(const double *vec1, const double *vec2, double *bias, int siz
 void layer_output(double *input, double *weights, double *bias, int input_size,
                   double *outputs, int output_size);
 
+
+/**
+ * @brief Transpose a matrix.
+ *
+ * This function transposes an input matrix.
+ *
+ * @param input Pointer to the input matrix.
+ * @param rows Number of rows in the input matrix.
+ * @param cols Number of columns in the input matrix.
+ * @param output Pointer to the output matrix (should be pre-allocated).
+ */
+void transpose_matrix(const double *input, int rows, int cols, double *output);
+
 #endif // UTILS_H
