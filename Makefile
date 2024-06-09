@@ -11,7 +11,7 @@ BINS = $(patsubst examples/%.c, $(BINDIR)/%, $(EXAMPLES))
 all: $(BINS)
 
 # Rule for compiling each example
-$(BINDIR)/%: examples/%.c $(SRCDIR)/nn.c $(SRCDIR)/spiral.c
+$(BINDIR)/%: examples/%.c $(SRCDIR)/nn.c $(SRCDIR)/spiral.c $(SRCDIR)/losscce.c
 	@mkdir -p $(BINDIR)
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 
