@@ -5,15 +5,14 @@
 
 #ifndef NN_H
 #define NN_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
-#include <cstdlib>
-#include <cstdio>
-#include <cmath>
 
-constexpr double RAND_HIGH_RANGE = 0.10;  /**< Upper limit for random weight initialization */
-constexpr double RAND_MIN_RANGE = -0.10;  /**< Lower limit for random weight initialization */
-constexpr double INIT_BIASES = 0.0;       /**< Initial value for biases */
-
+#define RAND_HIGH_RANGE 0.10  /**< Upper limit for random weight initialization */
+#define RAND_MIN_RANGE -0.10  /**< Lower limit for random weight initialization */
+#define INIT_BIASES 0.0       /**< Initial value for biases */
 /**
  * @brief Activation function callback type definition.
  */

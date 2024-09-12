@@ -6,9 +6,9 @@
 #ifndef CATEGORICAL_CROSSENTROPY_H
 #define CATEGORICAL_CROSSENTROPY_H
 
-#include <cstdio>
-#include <cstdlib>
-#include <cmath>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
 /**
  * @brief Structure representing the Categorical Cross Entropy Loss function.

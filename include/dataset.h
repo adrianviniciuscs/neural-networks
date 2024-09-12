@@ -5,7 +5,7 @@
 #ifndef DATASET_H
 #define DATASET_H
 
-#include <cstddef> // for size_t
+#include <stddef.h> // for size_t
 
 /**
  * @brief Structure representing spiral data for classification.
