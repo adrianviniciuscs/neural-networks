@@ -6,13 +6,13 @@
 #ifndef NN_H
 #define NN_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cmath>
 
-#define RAND_HIGH_RANGE (0.10)  /**< Upper limit for random weight initialization */
-#define RAND_MIN_RANGE (-0.10)  /**< Lower limit for random weight initialization */
-#define INIT_BIASES (0.0)       /**< Initial value for biases */
+constexpr double RAND_HIGH_RANGE = 0.10;  /**< Upper limit for random weight initialization */
+constexpr double RAND_MIN_RANGE = -0.10;  /**< Lower limit for random weight initialization */
+constexpr double INIT_BIASES = 0.0;       /**< Initial value for biases */
 
 /**
  * @brief Activation function callback type definition.
@@ -24,7 +24,7 @@ typedef void (*activation_callback)(double *output);
  */
 typedef struct {
     double *weights;             /**< Pointer to the weights array */
-    double *biases;               /**< Pointer to the biases array */
+    double *biases;              /**< Pointer to the biases array */
     double *output;              /**< Pointer to the output array */
     int input_size;              /**< Size of the input layer */
     int output_size;             /**< Size of the output layer */
@@ -130,7 +130,6 @@ void activation_softmax(layer_dense_t *output_layer);
  */
 double sum_softmax_layer_output(layer_dense_t *output_layer);
 
-
 /** 
  * @brief Generate a random number within a uniform distribution range.
  *
@@ -139,5 +138,5 @@ double sum_softmax_layer_output(layer_dense_t *output_layer);
  * @return Random number within the specified range.
  */
 double uniform_distribution(double rangeLow, double rangeHigh);
-#endif /* NN_H */
 
+#endif /* NN_H */

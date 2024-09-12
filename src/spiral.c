@@ -14,41 +14,41 @@ void spiral_data(int points, int classes, spiral_data_t *data) {
         return;
     }
 
-    int ix = 0; // Index for x coordinates
-    int iy = 0; // Index for y coordinates
+    int index_x = 0; // Index for x coordinates
+    int index_y = 0; // Index for y coordinates
 
     // Seed the random number generator
     srand(time(NULL));
 
     // Loop through each class to generate spiral data
-    for (int class_number = 0; class_number < classes; class_number++) {
-        double r = 0; // Radius
-        double t = class_number * 4; // Angle
+    for (int class_num = 0; class_num < classes; class_num++) {
+        double radius = 0; // Radius
+        double angle = class_num * 4; // Angle
 
         // Generate points on the spiral for the current class
-        while (r <= 1 && t <= (class_number + 1) * 4) {
-            // Add some randomness to t to introduce variation
-            double random_t = t + uniform_distribution(-1.0, 1.0) * 0.2;
+        while (radius <= 1 && angle <= (class_num + 1) * 4) {
+            // Add some randomness to angle to introduce variation
+            double random_angle = angle + uniform_distribution(-1.0, 1.0) * 0.2;
 
             // Convert polar coordinates to Cartesian coordinates
-            data->x[ix] = r * sin(random_t * 2.5); // x = r * sin(theta)
-            data->x[ix + 1] = r * cos(random_t * 2.5); // y = r * cos(theta)
+            data->x[index_x] = radius * sin(random_angle * 2.5); // x = r * sin(theta)
+            data->x[index_x + 1] = radius * cos(random_angle * 2.5); // y = r * cos(theta)
 
             // Assign the class number as the label
-            data->y[iy] = class_number;
+            data->y[index_y] = class_num;
 
-            // Increase r and t to move to the next point on the spiral
-            r += 1.0 / (points - 1); // Increment r to move along the radius
-            t += 4.0 / (points - 1); // Increment t to move along the angle
+            // Increase radius and angle to move to the next point on the spiral
+            radius += 1.0 / (points - 1); // Increment radius to move along the radius
+            angle += 4.0 / (points - 1); // Increment angle to move along the angle
 
             // Increment indices to move to the next set of coordinates
-            iy++; // Increment y index
-            ix += 2; // Increment x index (2 elements per x,y pair)
+            index_y++; // Increment y index
+            index_x += 2; // Increment x index (2 elements per x,y pair)
         }
     }
 }
-void dealloc_spiral(spiral_data_t *data)
-{
+
+void dealloc_spiral(spiral_data_t *data) {
     if (data->x != NULL) {
         free(data->x);
         data->x = NULL;
@@ -59,5 +59,3 @@ void dealloc_spiral(spiral_data_t *data)
         data->y = NULL;
     }
 }
-
-

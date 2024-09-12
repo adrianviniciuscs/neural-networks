@@ -7,16 +7,18 @@
 #define NET_INPUT_LAYER_1_SIZE 2
 #define NET_OUTPUT_LAYER_SIZE 5
 
-void print_layer_output(layer_dense_t *layer, int batch_idx);
+// Function to print layer output
+void print_layer_output(layer_dense_t *layer) {
+    for (int j = 0; j < layer->output_size; j++) {
+        printf("%f ", layer->output[j]);
+    }
+}
 
-int main(void)
-{
+int main(void) {
     srand(0); // Seed the random number generator
 
-    int i, j;
     spiral_data_t X_data;
-    layer_dense_t X;
-    layer_dense_t layer1;
+    layer_dense_t input_layer, hidden_layer;
 
     // Generate spiral data
     spiral_data(100, 3, &X_data);
@@ -25,33 +27,24 @@ int main(void)
         return 0;
     }
 
-    X.callback = NULL;
-    layer1.callback = activation_ReLU_callback;
-    layer_init(&layer1, NET_INPUT_LAYER_1_SIZE, NET_OUTPUT_LAYER_SIZE);
+    input_layer.callback = NULL;
+    hidden_layer.callback = activation_ReLU_callback;
+    layer_init(&hidden_layer, NET_INPUT_LAYER_1_SIZE, NET_OUTPUT_LAYER_SIZE);
 
     // Process batches
-    for (i = 0; i < NET_BATCH_SIZE; i++) {
-        X.output = &X_data.x[i * 2];
-        forward(&X, &layer1);
+    for (int i = 0; i < NET_BATCH_SIZE; i++) {
+        input_layer.output = &X_data.x[i * 2];
+        forward(&input_layer, &hidden_layer);
 
         // Print layer output
         printf("Batch: %d, Layer1 Output: ", i);
-        print_layer_output(&layer1, i);
+        print_layer_output(&hidden_layer);
         printf("\n");
     }
 
     // Clean up
-    dealloc_layer(&layer1);
+    dealloc_layer(&hidden_layer);
     dealloc_spiral(&X_data);
 
     return 0;
 }
-
-// Function to print layer output
-void print_layer_output(layer_dense_t *layer, int batch_idx) {
-    int j;
-    for (j = 0; j < layer->output_size; j++) {
-        printf("%f ", layer->output[j]);
-    }
-}
-

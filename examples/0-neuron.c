@@ -11,13 +11,12 @@ int main() {
   double bias = 3.0;
 
   // Compute the weighted sum of inputs and add the bias
-  double output = inputs[0] * weights[0] +  // Contribution from the first input
-                  inputs[1] * weights[1] +  // Contribution from the second input
-                  inputs[2] * weights[2] +  // Contribution from the third input
-                  bias;                     // Add the bias term
+  double output = bias; // Initialize output with the bias term
+  for (int i = 0; i < 3; i++) {
+    output += inputs[i] * weights[i]; // Add the contribution from each input
+  }
 
   // Print the output
   printf("%f\n", output);
-
   return 0;
 }

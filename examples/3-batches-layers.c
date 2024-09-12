@@ -11,50 +11,46 @@
 #define NET_HIDDEN_LAYER_2_SIZE 5 
 #define NET_OUTPUT_LAYER_SIZE 2 
 
-
-int main()
-{
-
-    //seed the random values
+int main() {
+    // Seed the random values
     srand(0);
 
-    int i = 0;
-    int j = 0;
-    layer_dense_t X;
-    layer_dense_t layer1;
-    layer_dense_t layer2;
-    double X_input[NET_BATCH_SIZE][NET_INPUT_LAYER_1_SIZE] = {
-        {1.0,2.0,3.0,2.5},
-        {2.0,5.0,-1.0,2.0},
-        {-1.5,2.7,3.3,-0.8}
+    // Define input values for the batches
+    double input_batches[NET_BATCH_SIZE][NET_INPUT_LAYER_1_SIZE] = {
+        {1.0, 2.0, 3.0, 2.5},
+        {2.0, 5.0, -1.0, 2.0},
+        {-1.5, 2.7, 3.3, -0.8}
     };
 
+    // Initialize layers
+    layer_dense_t input_layer, hidden_layer, output_layer;
+    layer_init(&hidden_layer, NET_INPUT_LAYER_1_SIZE, NET_HIDDEN_LAYER_2_SIZE);
+    layer_init(&output_layer, NET_HIDDEN_LAYER_2_SIZE, NET_OUTPUT_LAYER_SIZE);
 
-    layer_init(&layer1,NET_INPUT_LAYER_1_SIZE,NET_HIDDEN_LAYER_2_SIZE);
-    layer_init(&layer2,NET_HIDDEN_LAYER_2_SIZE,NET_OUTPUT_LAYER_SIZE);
+    // Process each batch
+    for (int batch = 0; batch < NET_BATCH_SIZE; batch++) {
+        input_layer.output = input_batches[batch];
 
-    for(i = 0; i < NET_BATCH_SIZE;i++){
-        X.output = &X_input[i][0];
-
-        forward(&X,&layer1);
-
-        printf("batch: %d layerX_output: ",i);
-        for(j = 0; j < layer1.output_size; j++){
-            printf("%f ",layer1.output[j]);
+        // Forward pass through the hidden layer
+        forward(&input_layer, &hidden_layer);
+        printf("Batch %d, Hidden Layer Output: ", batch);
+        for (int j = 0; j < hidden_layer.output_size; j++) {
+            printf("%f ", hidden_layer.output[j]);
         }
         printf("\n");
 
-        forward(&layer1,&layer2);
-        printf("batch: %d layerY_output: ",i);
-        for(j = 0; j < layer2.output_size; j++){
-            printf("%f ",layer2.output[j]);
+        // Forward pass through the output layer
+        forward(&hidden_layer, &output_layer);
+        printf("Batch %d, Output Layer Output: ", batch);
+        for (int j = 0; j < output_layer.output_size; j++) {
+            printf("%f ", output_layer.output[j]);
         }
         printf("\n");
     }
 
-
-    dealloc_layer(&layer1);
-    dealloc_layer(&layer2);
+    // Deallocate layers
+    dealloc_layer(&hidden_layer);
+    dealloc_layer(&output_layer);
 
     return 0;
 }

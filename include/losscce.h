@@ -6,16 +6,16 @@
 #ifndef CATEGORICAL_CROSSENTROPY_H
 #define CATEGORICAL_CROSSENTROPY_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
+
 /**
  * @brief Structure representing the Categorical Cross Entropy Loss function.
  */
 typedef struct {
     double* (*forward)(double *, int *, int, int); ///< Function pointer to forward function
 } Loss_CCE;
-
 
 /**
  * @brief Calculates the categorical cross entropy loss.
